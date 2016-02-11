@@ -1,6 +1,6 @@
 #!/bin/sh 
 
-#The following parameters are to configure PostgreSQL. 
+#The following parameters are to configure PostgreSQL.
 # Edit the following to change the name of the database user that will be created:
 APP_DB_USER=blog
 APP_DB_PASS=dbpass
@@ -23,6 +23,9 @@ apt-get update
 apt-get -y upgrade
 
 ############################### Edit here #
+apt-get -y install build-essential libpq-dev ruby2.3 ruby2.3-dev git-core
+gem install bundler
+wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh 
 
 # install the following packages:  
 #       - build-essential  (development tools)
@@ -43,6 +46,7 @@ PG_HBA="/etc/postgresql/$PG_VERSION/main/pg_hba.conf"
 sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/" "$PG_CONF"
 
 ############################### Edit here #
+sed -i "s/#local    all             all             all                     peer/local    all             all             all                     md5/" "$PG_CONF"
 
 # Edit pg_hba.conf to add password authentication
 #
